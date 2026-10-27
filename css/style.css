@@ -1,0 +1,416 @@
+:root {
+  --white: #ffffff;
+  --black-85: rgba(0, 0, 0, 0.85);
+  --clinker-75: rgba(58, 39, 10, 0.75);
+
+  --font-1: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-2: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --page-pad: 12.96px;
+  --frame-h: min(527.45px, 58.6vh);
+  --frame-w: calc(var(--frame-h) * 1.5); /* carousel images are ~3:2 */
+  --caption-gap: 46.65px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative; /* footer anchors to the bottom of the page */
+  min-height: 100vh;
+  margin: 0;
+  background: var(--white);
+  color: var(--black-85);
+  font-family: var(--font-1);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p,
+ul,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------- Header ---------- */
+
+/* Three columns: [gutter | image | gutter]. Each label is centered in its gutter. */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr min(var(--frame-w), calc(100% - 2 * var(--page-pad))) 1fr;
+  align-items: center;
+  height: 100vh;
+  pointer-events: none;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 33.6px;
+  color: var(--clinker-75);
+  white-space: nowrap;
+}
+
+.site-title {
+  grid-column: 1;
+  justify-self: center;
+}
+
+.site-nav {
+  grid-column: 3;
+  justify-self: center;
+}
+
+/* CV page: gutters line up with the outer columns of the CV grid */
+.page-cv .site-header {
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 13px;
+  padding: 0 var(--page-pad);
+}
+
+.page-cv .site-nav {
+  grid-column: 4;
+}
+
+.site-header a {
+  pointer-events: auto;
+}
+
+.site-nav {
+  display: flex;
+  gap: 0.75em;
+}
+
+/* ---------- Pages ---------- */
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--page-pad);
+}
+
+/* ---------- Slideshow ---------- */
+
+/* Equal top/bottom padding keeps the picture + caption centered in the viewport;
+   the bottom padding holds the slide counter. */
+.slideshow {
+  position: relative;
+  width: 100%;
+  padding-block: 60px;
+}
+
+.slideshow:focus {
+  outline: none;
+}
+
+.slides {
+  display: grid;
+}
+
+.slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--caption-gap);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+.slide.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide img {
+  display: block;
+  height: var(--frame-h);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Captions sit above the click areas so links stay clickable */
+.slide .caption {
+  position: relative;
+  z-index: 2;
+}
+
+/* Invisible left/right halves — click to go back/forward */
+.slide-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 50%;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.slide-nav--prev {
+  left: 0;
+  cursor: w-resize;
+}
+
+.slide-nav--next {
+  right: 0;
+  cursor: e-resize;
+}
+
+.slide-nav:focus-visible {
+  outline: 1px solid var(--clinker-75);
+  outline-offset: -1px;
+}
+
+.slide-count {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  text-align: center;
+  font-weight: 300;
+  font-size: 11.7px;
+  line-height: 14px;
+}
+
+/* ---------- Captions ---------- */
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-weight: 300;
+  font-size: 11.7px;
+  line-height: 14px;
+  color: var(--black-85);
+}
+
+.caption-title {
+  font-weight: 400;
+}
+
+.caption a:hover {
+  text-decoration: underline;
+}
+
+.contact-note {
+  margin: 0;
+  padding: 0 var(--page-pad);
+  font-weight: 300;
+  font-size: 14.4px;
+  line-height: 18.66px;
+  color: var(--clinker-75);
+  text-align: center;
+}
+
+/* ---------- About ---------- */
+
+.page--about {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 27.99px;
+  padding-bottom: calc(var(--page-pad) + 60px);
+  font-family: var(--font-2);
+  font-size: 11.7px;
+  line-height: 14px;
+}
+
+.about-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 457.5px;
+  min-height: 388.5px;
+}
+
+.about-intro img {
+  display: block;
+  width: 156.37px;
+  height: 234.57px;
+  object-fit: cover;
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+
+.about-lists {
+  display: grid;
+  grid-template-columns: 340fr 222.5fr 222.5fr 340fr 237.5fr;
+  gap: 13px;
+  width: 100%;
+}
+
+.about-list li::before {
+  content: "+ ";
+}
+
+.about-list--experience { grid-column: 2; }
+.about-list--awards { grid-column: 3; }
+.about-list--exhibitions { grid-column: 4; }
+
+/* ---------- CV ---------- */
+
+.cv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+  gap: 13px;
+  min-height: 100vh;
+  padding: 48px var(--page-pad);
+  font-family: var(--font-2);
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--black-85);
+}
+
+.cv-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cv-column--left { grid-column: 2; }
+.cv-column--right { grid-column: 3; }
+
+.cv h2 {
+  margin: 0;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+/* ---------- Contact ---------- */
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--page-pad);
+}
+
+/* Same type as the CV text */
+.contact .contact-note {
+  font-family: var(--font-2);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--black-85);
+}
+
+/* ---------- Footer ---------- */
+
+/* Sits in the bottom-right corner of the page (not the screen) */
+.site-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: var(--page-pad);
+  text-align: right;
+  font-weight: 300;
+  font-size: 15.6px;
+  line-height: 18.66px;
+  color: var(--clinker-75);
+}
+
+.site-footer a {
+  font-weight: 400;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 900px) {
+  .about-lists {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .about-list--experience { grid-column: 1; }
+  .about-list--awards { grid-column: 2; }
+  .about-list--exhibitions { grid-column: 3; }
+}
+
+/* Narrow layout: js/nav.js adds .nav-top to <html> when a side label can't fit
+   in its gutter with 20px clear on each side. Nav moves to a top bar. */
+.nav-top .site-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  height: auto;
+  padding: 16px;
+  background: var(--white);
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@media (max-width: 640px) {
+
+  .page {
+    min-height: auto;
+    padding: 48px 16px;
+  }
+
+  .slide {
+    gap: 20px;
+  }
+
+  .slide img {
+    width: 100%;
+    height: auto;
+  }
+
+  .about-lists {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about-list--experience,
+  .about-list--awards,
+  .about-list--exhibitions {
+    grid-column: 1;
+  }
+
+  .cv {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 48px 16px;
+  }
+
+  .cv-column--left,
+  .cv-column--right {
+    grid-column: 1;
+  }
+
+  .site-footer {
+    position: static;
+    padding: 16px;
+  }
+}
