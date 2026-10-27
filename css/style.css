@@ -371,6 +371,15 @@ ul {
   line-height: 24px;
 }
 
+/* CV in the narrow layout: two full-width columns, same side margin as the about section */
+.nav-top .cv {
+  grid-template-columns: 1fr 1fr;
+  padding-inline: var(--page-pad);
+}
+
+.nav-top .cv-column--left { grid-column: 1; }
+.nav-top .cv-column--right { grid-column: 2; }
+
 @media (max-width: 640px) {
 
   .page {
@@ -398,14 +407,17 @@ ul {
     grid-column: 1;
   }
 
-  .cv {
+  .cv,
+  .nav-top .cv {
     grid-template-columns: 1fr;
     gap: 14px;
     padding: 48px 16px;
   }
 
   .cv-column--left,
-  .cv-column--right {
+  .cv-column--right,
+  .nav-top .cv-column--left,
+  .nav-top .cv-column--right {
     grid-column: 1;
   }
 
