@@ -426,3 +426,11 @@ ul {
     padding: 16px;
   }
 }
+
+/* Discourage saving images (drag, iOS long-press menu, selection) */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
